@@ -1,3 +1,4 @@
+'use client'
 import { makeAutoObservable } from 'mobx';
 
 interface TodoItem {
