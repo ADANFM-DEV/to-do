@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import todoStore from '../store/page';
@@ -17,37 +16,54 @@ const IndexPage = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
       <h1 className="text-6xl m-10">To Do List</h1>
-      <div className='flex flex-row mb-5'>
-      <input
-        className='text-black mr-10'
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="What's next?"
-        autoCapitalize='sentences'
-      />
-      <button  className='rounded p-2 bg-green-500' onClick={handleAddTodo}>Agregar</button>
-
+      <div className="flex flex-row items-center mb-5">
+        <input
+          className="text-black mr-10 height-10 border border-sky-500 rounded p-2"
+          type="text"
+          maxLength={50}
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          placeholder="What's next?"
+          autoCapitalize="sentences"
+        />
+        <button className="rounded p-2 bg-green-500" onClick={handleAddTodo}>
+          Agregar
+        </button>
       </div>
-      
-      <ul className='flex flex-col h-full items-center'>
-        {todoStore.todos.map((todo) => (
-          <li className='border border-sky-500' key={todo.id}>
-            <span
-            className=''
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-              }}
-              onClick={() => todoStore.toggleTodoCompletion(todo.id)}
-            >
-              {todo.text}
-            </span>
-            <button className='rounded p-2 bg-red-500 end-9' onClick={() => todoStore.removeTodo(todo.id)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-col items-center w-4/5">
+        <ul className='flex flex-col w-full '>
+          {todoStore.todos.map((todo) => (
+            <li className="border border-sky-500 flex justify-between my-2 items-center w-full" key={todo.id}>
+              <span
+                className=" ml-5"
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "none",
+                  color: todo.completed ? "gray" : "white",
+                }}
+                onClick={() => todoStore.toggleTodoCompletion(todo.id)}
+              >
+                {todo.text}
+              </span>
+              <div>
+              <button
+                  className={`rounded p-2 m-1 mr-10 ${todo.completed ? 'bg-gray-300' : 'bg-blue-500'}`}
+                  onClick={() => todoStore.toggleTodoCompletion(todo.id)}
+                  style={{ width: '120px' }}
+                >
+                  {todo.completed ? 'Completado' : 'Completar'}
+                </button>
+              <button
+                className="rounded p-2 w-30 mr-10 bg-red-500"
+                onClick={() => todoStore.removeTodo(todo.id)}
+                style={{ width: '120px' }}
+              >
+                Eliminar
+              </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
